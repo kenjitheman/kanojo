@@ -7,6 +7,8 @@ import (
 	"github.com/enescakir/emoji"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/joho/godotenv"
+
+	"main.go/openai"
 )
 
 var (
@@ -83,7 +85,31 @@ func Start() {
 			}
 		case "generator":
 			if isBotRunning {
-				fmt.Println("generator is running")
+				infinityEmoji := emoji.Sprintf("%v", emoji.Infinity)
+				msg.Text = infinityEmoji + " your promt:"
+				bot.Send(msg)
+				for {
+					response := <-updates
+					if response.Message == nil {
+						continue
+					}
+					if response.Message.Chat.ID != update.Message.Chat.ID {
+						continue
+					}
+					promt := response.Message.Text
+					openai.GenerateImage(promt)
+
+					gdriveEmoji := emoji.Sprintf("%v", emoji.FileFolder)
+					msg.Text = gdriveEmoji + " do you want to save this image to your google drive (y/n) ?"
+
+					answer := response.Message.Text
+					if answer == "y" {
+						fmt.Println(
+							"saving image to google drive...",
+						) // TODO: saving image to google drive
+					}
+					break
+				}
 			}
 		case "stop":
 			if isBotRunning {
