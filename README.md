@@ -23,6 +23,9 @@
 ```
 ├── cmd
 │   └── main.go
+├── core
+│   └── core.go
+├── credentials.json
 ├── Dockerfile
 ├── gdrive
 │   └── gdrive.go
@@ -32,7 +35,7 @@
 │   └── openai.go
 ├── README.md
 └── tg
-    └── bot.go
+    └── tg.go
 ```
 
 ## installation
