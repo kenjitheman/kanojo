@@ -97,16 +97,17 @@ func Start() {
 						continue
 					}
 					promt := response.Message.Text
-					openai.GenerateImage(promt)
-
+					file := openai.GenerateImage(promt)
 					gdriveEmoji := emoji.Sprintf("%v", emoji.FileFolder)
+
+					// TODO: sending file to user logic
+
 					msg.Text = gdriveEmoji + " do you want to save this image to your google drive (y/n) ?"
 
 					answer := response.Message.Text
 					if answer == "y" {
-						fmt.Println(
-							"saving image to google drive...",
-						) // TODO: saving image to google drive
+						msg.Text = gdriveEmoji + " saving this image to your google drive..."
+						// TODO: saving file to google drive
 					}
 					break
 				}
