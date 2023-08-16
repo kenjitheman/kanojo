@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -14,54 +14,86 @@ import (
 	drive "google.golang.org/api/drive/v3"
 )
 
-func ServiceAccount(credentialFile string) *http.Client {
+func getUserClient(credentialFile, tokenFile string, scopes ...string) (*http.Client, error) {
 	b, err := os.ReadFile(credentialFile)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	c := struct {
 		Email      string `json:"client_email"`
 		PrivateKey string `json:"private_key"`
 	}{}
-	json.Unmarshal(b, &c)
+	err = json.Unmarshal(b, &c)
+	if err != nil {
+		return nil, err
+	}
 	config := &jwt.Config{
 		Email:      c.Email,
 		PrivateKey: []byte(c.PrivateKey),
-		Scopes: []string{
-			drive.DriveScope,
-		},
-		TokenURL: google.JWTTokenURL,
+		Scopes:     append([]string{drive.DriveScope}, scopes...),
+		TokenURL:   google.JWTTokenURL,
 	}
-	client := config.Client(oauth2.NoContext)
-	return client
+
+	tok, err := getTokenFromFile(tokenFile)
+	if err != nil {
+		return nil, err
+	}
+	client := config.Client(oauth2.NoContext, tok)
+	return client, nil
 }
 
-func Gdrive(fileName string) {
-	filename := fileName
-	baseMimeType := "text/plain"
-	client := ServiceAccount("../credentials.json") // set the json file of service account
+func getTokenFromFile(tokenFile string) (*oauth2.Token, error) {
+	tokData, err := os.ReadFile(tokenFile)
+	if err != nil {
+		return nil, err
+	}
+	var tok oauth2.Token
+	err = json.Unmarshal(tokData, &tok)
+	if err != nil {
+		return nil, err
+	}
+	return &tok, nil
+}
 
-	srv, err := drive.New(client)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatalln(err)
-	}
+func saveFile(srv *drive.Service, file *os.File, filename string) error {
+	baseMimeType := "text/plain"
 	fileInf, err := file.Stat()
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	defer file.Close()
 	f := &drive.File{Name: filename}
-	res, err := srv.Files.
-		Create(f).
-		ResumableMedia(context.Background(), file, fileInf.Size(), baseMimeType).
-		ProgressUpdater(func(now, size int64) { fmt.Printf("%d, %d\r", now, size) }).
+	_, err = srv.Files.Create(f).
+		Media(file, googleapi.ContentType(baseMimeType)).
 		Do()
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
-	fmt.Printf("%s\n", res.Id)
+	return nil
+}
+
+func Gdrive(credentialFile, tokenFile, fileName string) error {
+	client, err := getUserClient(credentialFile, tokenFile)
+	if err != nil {
+		return err
+	}
+
+	srv, err := drive.NewService(context.Background(), withClient(client))
+	if err != nil {
+		return err
+	}
+
+	file, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	err = saveFile(srv, file, filepath.Base(fileName))
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("[SUCCESS] file saved successfully.")
+	return nil
 }
