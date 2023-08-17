@@ -1,22 +1,24 @@
-<h2 align="center">fantajier - image generator tgbot</h2>
+<h2 align="center">kanojo - image generator tgbot</h2>
 
 ###
 
-<img align="right" height="200" src="https://media.tenor.com/NBS9cKKEeC8AAAAC/rainbow.gif"  />
+<img align="right" height="400" src="https://media.tenor.com/PcSajWr_cMYAAAAd/anime.gif"  />
 
 ###
 
 <div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" height="200" alt="go logo"  />
-  <img width="25" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height="200" alt="docker logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" height="250" alt="go logo"  />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height="250" alt="docker logo"  />
 </div>
 
 ###
 
 <div align="center">
-  <img src="https://img.shields.io/static/v1?message=fantajier&logo=telegram&label=&color=909ef7&logoColor=white&labelColor=&style=for-the-badge" height="30" alt="telegram logo"  />
+  <img src="https://img.shields.io/static/v1?message=kanojo&logo=telegram&label=&color=909ef7&logoColor=white&labelColor=&style=for-the-badge" height="30" alt="telegram logo"  />
 </div>
+
+<br>
 
 ## project structure:
 
@@ -43,7 +45,7 @@
 use git clone:
 
 ```
-git clone https://github.com/kenjitheman/fantajier
+git clone https://github.com/kenjitheman/kanojo
 ```
 
 ## usage
