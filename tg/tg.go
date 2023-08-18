@@ -102,34 +102,6 @@ func Start() {
 					imageUrl := openai.GenerateImage(prompt)
 					msg.Text = imageUrl
 
-					gdriveEmoji := emoji.Sprintf("%v", emoji.FileFolder)
-					msg.Text = gdriveEmoji + " do you want to save this image to your Google Drive (y/n) ?"
-					bot.Send(msg)
-
-					answer := <-updates
-					if answer.Message == nil {
-						continue
-					}
-					if answer.Message.Chat.ID != update.Message.Chat.ID {
-						continue
-					}
-
-					if answer.Message.Text == "y" {
-						msg.Text = gdriveEmoji + " saving this image to your Google Drive..."
-						// TODO: make this gdive logic\
-						bot.Send(msg)
-						if err != nil {
-							msg.Text = emoji.Sprintf(
-								"%v",
-								emoji.Warning,
-							) + "[ERROR] failed to save image to Google Drive"
-						} else {
-							msg.Text = emoji.Sprintf("%v", emoji.FloppyDisk) + "[SUCCESS] image saved to your Google Drive successfully"
-						}
-					} else {
-						break
-					}
-
 					break
 				}
 			}
