@@ -100,7 +100,7 @@ func Start() {
 
 					prompt := response.Message.Text
 					imageUrl := openai.GenerateImage(prompt)
-          msg.Text = imageUrl
+					msg.Text = imageUrl
 
 					gdriveEmoji := emoji.Sprintf("%v", emoji.FileFolder)
 					msg.Text = gdriveEmoji + " do you want to save this image to your Google Drive (y/n) ?"
@@ -116,7 +116,7 @@ func Start() {
 
 					if answer.Message.Text == "y" {
 						msg.Text = gdriveEmoji + " saving this image to your Google Drive..."
-            // TODO: make this gdive logic\ 
+						// TODO: make this gdive logic\
 						bot.Send(msg)
 						if err != nil {
 							msg.Text = emoji.Sprintf(
