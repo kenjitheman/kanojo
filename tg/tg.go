@@ -73,21 +73,22 @@ func Start() {
 			isBotRunning = true
 			okEmoji := emoji.Sprintf("%v", emoji.GreenCircle)
 			if isBotRunning {
-				msg.Text = okEmoji + " fantajier is already running"
+				msg.Text = okEmoji + " kanojo is already running"
 			}
-			msg.Text = okEmoji + " fantajier has been started"
+			msg.Text = okEmoji + " kanojo has been started"
 			msg.ReplyMarkup = generalKeyboard
 		case "help":
 			if isBotRunning {
 				infoEmoji := emoji.Sprintf("%v", emoji.Information)
-				msg.Text = infoEmoji + " fantajier hints\n\n /help - to get all commands\n /start - to start fantajier\n /stop - to stop fantajier\n /generator - to generate images\n /support - to tell about bugs you found"
+				msg.Text = infoEmoji + " kanojo hints\n\n /help - to get all commands\n /start - to start kanojo\n /stop - to stop kanojo\n /generator - to generate images\n /support - to tell about bugs you found"
 				msg.ReplyMarkup = generalKeyboard
 			}
 		case "generator":
 			if isBotRunning {
 				infinityEmoji := emoji.Sprintf("%v", emoji.Infinity)
-				msg.Text = infinityEmoji + " your promt:"
+				msg.Text = infinityEmoji + " your prompt:"
 				bot.Send(msg)
+
 				for {
 					response := <-updates
 					if response.Message == nil {
@@ -96,26 +97,47 @@ func Start() {
 					if response.Message.Chat.ID != update.Message.Chat.ID {
 						continue
 					}
-					promt := response.Message.Text
-					file := openai.GenerateImage(promt)
+
+					prompt := response.Message.Text
+					imageUrl := openai.GenerateImage(prompt)
+          msg.Text = imageUrl
+
 					gdriveEmoji := emoji.Sprintf("%v", emoji.FileFolder)
+					msg.Text = gdriveEmoji + " do you want to save this image to your Google Drive (y/n) ?"
+					bot.Send(msg)
 
-					// TODO: sending file to user logic
-
-					msg.Text = gdriveEmoji + " do you want to save this image to your google drive (y/n) ?"
-
-					answer := response.Message.Text
-					if answer == "y" {
-						msg.Text = gdriveEmoji + " saving this image to your google drive..."
-						// TODO: saving file to google drive
+					answer := <-updates
+					if answer.Message == nil {
+						continue
 					}
+					if answer.Message.Chat.ID != update.Message.Chat.ID {
+						continue
+					}
+
+					if answer.Message.Text == "y" {
+						msg.Text = gdriveEmoji + " saving this image to your Google Drive..."
+            // TODO: make this gdive logic\ 
+						bot.Send(msg)
+						if err != nil {
+							msg.Text = emoji.Sprintf(
+								"%v",
+								emoji.Warning,
+							) + "[ERROR] failed to save image to Google Drive"
+						} else {
+							msg.Text = emoji.Sprintf("%v", emoji.FloppyDisk) + "[SUCCESS] image saved to your Google Drive successfully"
+						}
+					} else {
+						break
+					}
+
 					break
 				}
 			}
+
 		case "stop":
 			if isBotRunning {
 				stopEmoji := emoji.Sprintf("%v", emoji.RedCircle)
-				msg.Text = stopEmoji + " fantajier has been stopped"
+				msg.Text = stopEmoji + " kanojo has been stopped"
 				msg.ReplyMarkup = startKeyboard
 				isBotRunning = false
 			}
