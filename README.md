@@ -29,10 +29,7 @@
 │   └── main.go
 ├── core
 │   └── core.go
-├── credentials.json
 ├── Dockerfile
-├── gdrive
-│   └── gdrive.go
 ├── go.mod
 ├── go.sum
 ├── openai
@@ -100,15 +97,7 @@ func Start() {
 ```
 ENV TELEGRAM_API_TOKEN=YOUR_TOKEN
 ENV OPENAI_API_TOKEN=YOUR_API_TOKEN
-```
-
-- then run it ->
-
-```
-docker build -t your_image_name .
-docker run -d -p 8080:80 your_image_name
-```
-
+``
 ## contributing
 
 - pull requests are welcome, for major changes, please open an issue first to
