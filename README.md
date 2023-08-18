@@ -1,5 +1,7 @@
 <h2 align="center">kanojo - image generator tgbot</h2>
 
+#### works only if you have some gas on your openai account (to generate images)
+
 ###
 
 <img align="right" height="400" src="https://media.tenor.com/PcSajWr_cMYAAAAd/anime.gif"  />
