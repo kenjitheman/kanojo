@@ -1,10 +1,4 @@
-<h2 align="center">kanojo - image generator tgbot</h2>
-
-#### works only if you have some gas on your openai account (to generate images)
-
-###
-
-<img align="right" height="400" src="https://media.tenor.com/PcSajWr_cMYAAAAd/anime.gif"  />
+## image generator tgbot
 
 ###
 
@@ -14,17 +8,13 @@
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height="250" alt="docker logo"  />
 </div>
 
-###
-
-<div align="center">
-  <img src="https://img.shields.io/static/v1?message=kanojo&logo=telegram&label=&color=909ef7&logoColor=white&labelColor=&style=for-the-badge" height="30" alt="telegram logo"  />
-</div>
-
-<br>
+##
+- **works only if you have some gas on your openai account (to generate images)**
+##
 
 ## project structure:
 
-```
+```go
 ├── cmd
 │   └── main.go
 ├── core
@@ -41,9 +31,7 @@
 
 ## installation
 
-use git clone:
-
-```
+```shell
 git clone https://github.com/kenjitheman/kanojo
 ```
 
@@ -51,15 +39,15 @@ git clone https://github.com/kenjitheman/kanojo
 
 - create .env file and inside you should create env variable with your api key:
 
-```
+```.env
 TELEGRAM_API_TOKEN=YOUR_TOKEN
 OPENAI_API_TOKEN=YOUR_API_TOKEN
 ```
 
-- then you should uncomment commented lines in tg/tg.go ( ! you need uncomment
-  commented lines only if you using this way !) ->
+- then you should uncomment commented lines in tg/tg.go
+	- **( ! you need uncomment commented lines only if you using this way !)**
 
-```
+```go
 package tg
 
 import (
@@ -90,14 +78,14 @@ func Start() {
 	}
 ```
 
-### you can also run it using docker ->
+- you can also run it using docker:
+	- you need to paste your api key in dockerfile:
 
-- you need to paste your api key in dockerfile ->
-
-```
+```dockerfile
 ENV TELEGRAM_API_TOKEN=YOUR_TOKEN
 ENV OPENAI_API_TOKEN=YOUR_API_TOKEN
-``
+```
+
 ## contributing
 
 - pull requests are welcome, for major changes, please open an issue first to
