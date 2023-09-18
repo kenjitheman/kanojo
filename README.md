@@ -14,7 +14,7 @@
 
 ## project structure:
 
-```
+```go
 ├── cmd
 │   └── main.go
 ├── core
@@ -31,7 +31,7 @@
 
 ## installation
 
-```
+```shell
 git clone https://github.com/kenjitheman/kanojo
 ```
 
@@ -39,7 +39,7 @@ git clone https://github.com/kenjitheman/kanojo
 
 - create .env file and inside you should create env variable with your api key:
 
-```
+```.env
 TELEGRAM_API_TOKEN=YOUR_TOKEN
 OPENAI_API_TOKEN=YOUR_API_TOKEN
 ```
@@ -47,7 +47,7 @@ OPENAI_API_TOKEN=YOUR_API_TOKEN
 - then you should uncomment commented lines in tg/tg.go
 	- **( ! you need uncomment commented lines only if you using this way !)**
 
-```
+```go
 package tg
 
 import (
@@ -81,7 +81,7 @@ func Start() {
 - you can also run it using docker:
 	- you need to paste your api key in dockerfile:
 
-```
+```dockerfile
 ENV TELEGRAM_API_TOKEN=YOUR_TOKEN
 ENV OPENAI_API_TOKEN=YOUR_API_TOKEN
 ```
