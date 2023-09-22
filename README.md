@@ -1,4 +1,4 @@
-<h2 align="center">kanojo - image generator tgbot</h2>
+## image generator tgbot
 
 ###
 
