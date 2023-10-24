@@ -13,6 +13,7 @@ func GenerateImage(prompt string) string {
 	err := godotenv.Load("../.env")
 	if err != nil {
 		fmt.Println("[ERROR] error loading .env file", err)
+        panic(err)
 	}
 	c := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
 	ctx := context.Background()
