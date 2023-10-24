@@ -12,11 +12,7 @@ const (
 
 func GenerateRandomFileName() string {
 	rand.Seed(time.Now().UnixNano())
-
-	length := rand.Intn(
-		fileNameLength,
-	) + 1
-	b := make([]byte, length)
+	b := make([]byte, fileNameLength)
 	for i := range b {
 		b[i] = letterBytes[rand.Intn(len(letterBytes))]
 	}
