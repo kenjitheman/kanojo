@@ -30,7 +30,7 @@
 
 ## Installation
 
-```shell
+```sh
 git clone https://github.com/kenjitheman/kanojo
 ```
 
