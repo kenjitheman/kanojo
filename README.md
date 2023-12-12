@@ -9,7 +9,8 @@
 ## Project structure:
 
 ```go
-.
+kanojo
+│
 ├── bot
 │   ├── bot.go
 │   ├── keyboards.go
