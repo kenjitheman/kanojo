@@ -2,17 +2,12 @@ package bot
 
 import (
 	"fmt"
+	"github.com/btwkenji/kanojo/openai"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	//"github.com/joho/godotenv"
-	"github.com/kenjitheman/kanojo/openai"
 	"os"
 )
 
 func Start() {
-	//err := godotenv.Load(".env")
-	//if err != nil {
-	//fmt.Println("[ERROR] error loading .env file")
-	//}
 	bot, err := tgbotapi.NewBotAPI(os.Getenv("TELEGRAM_API_TOKEN"))
 	if err != nil {
 		fmt.Println("[ERROR] error creating bot: ", err)

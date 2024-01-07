@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/kenjitheman/kanojo/bot"
+	"github.com/btwkenji/kanojo/bot"
 )
 
 func main() {
