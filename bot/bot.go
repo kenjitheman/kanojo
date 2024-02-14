@@ -2,7 +2,7 @@ package bot
 
 import (
 	"fmt"
-	"github.com/btwkenji/kanojo/openai"
+	"github.com/kenjitheman/kanojo/openai"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"os"
 )
